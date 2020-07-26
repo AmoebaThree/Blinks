@@ -6,18 +6,18 @@ Lights
 
 Format: \<channel> "message"
 
-**Inputs**
+### Inputs
 
-* \<blinks.front> on
+* \<blinks.front> "on"
   * Turns the front LED on
-* \<blinks.front> off
+* \<blinks.front> "off"
   * Turns the front LED off
-* \<blinks.top> on
+* \<blinks.top> "on"
   * Turns the top LED on
-* \<blinks.top> off
+* \<blinks.top> "off"
   * Turns the top LED off
 
-**Outputs**
+### Outputs
 
 * \<blinks.front.status> "front.on"
   * The front LED has switched on
