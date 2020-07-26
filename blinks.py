@@ -18,6 +18,11 @@ def execute():
     top_request_channel = 'blinks.top'
     front_request_channel = 'blinks.front'
 
+    cmd_on = 'on'
+    cmd_off = 'off'
+    cmd_toggle = '/'
+    cmd_query = '?'
+
     r = redis.Redis(host='192.168.0.1', port=6379,
                     db=0, decode_responses=True)
     p = r.pubsub(ignore_subscribe_messages=True)
@@ -29,17 +34,29 @@ def execute():
     print('Startup complete')
 
     try:
+        r.publish(top_pfd_channel, '?')
+        r.publish(front_pfd_channel, '?')
+
         for message in p.listen():
             if message['channel'] == top_request_channel:
-                if message['data'] == 'on':
+                if message['data'] == cmd_on:
                     r.publish(top_pfd_channel, 'on')
-                else:
+                elif message['data'] == cmd_off:
                     r.publish(top_pfd_channel, 'off')
-            if message['channel'] == front_request_channel:
-                if message['data'] == 'on':
+                elif message['data'] == cmd_toggle:
+                    r.publish(top_pfd_channel, '/')
+                elif message['data'] == cmd_query:
+                    r.publish(top_pfd_channel, '?')
+
+            elif message['channel'] == front_request_channel:
+                if message['data'] == cmd_on:
                     r.publish(front_pfd_channel, 'on')
-                else:
+                elif message['data'] == cmd_off:
                     r.publish(front_pfd_channel, 'off')
+                elif message['data'] == cmd_toggle:
+                    r.publish(front_pfd_channel, '/')
+                elif message['data'] == cmd_query:
+                    r.publish(front_pfd_channel, '?')
 
             elif message['channel'] == top_channel_status:
                 if message['data'] == top_channel_on:
