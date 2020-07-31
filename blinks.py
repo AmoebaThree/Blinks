@@ -60,15 +60,15 @@ def execute():
 
             elif message['channel'] == top_channel_status:
                 if message['data'] == top_channel_on:
-                    r.publish('blinks.front.status', 'front.on')
+                    r.publish('blinks.top.status', 'top.on')
                 elif message['data'] == top_channel_off:
-                    r.publish('blinks.front.status', 'front.off')
+                    r.publish('blinks.top.status', 'top.off')
 
             elif message['channel'] == front_channel_status:
                 if message['data'] == front_channel_on:
-                    r.publish('blinks.top.status', 'top.on')
+                    r.publish('blinks.front.status', 'front.on')
                 elif message['data'] == front_channel_off:
-                    r.publish('blinks.top.status', 'top.off')
+                    r.publish('blinks.front.status', 'front.off')
     except:
         p.close()
         r.publish('services', 'blinks.off')
